@@ -14,6 +14,8 @@ pycodestyle file_name.py
 ----------------------------------
 
 Resources
+
+
 Read or watch:
 
 Data structures

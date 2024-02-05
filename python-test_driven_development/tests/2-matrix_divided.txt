@@ -1,0 +1,60 @@
+# Test cases for matrix_divided function
+
+>>> from my_module import matrix_divided
+
+# Test case 1: Regular matrix and positive divisor
+>>> matrix = [[1, 2, 3], [4, 5, 6]]
+>>> matrix_divided(matrix, 3)
+[[0.33, 0.67, 1.0], [1.33, 1.67, 2.0]]
+>>> matrix  # original matrix remains unchanged
+[[1, 2, 3], [4, 5, 6]]
+
+# Test case 2: Matrix with negative numbers and divisor as a float
+>>> matrix = [[-1, -2, -3], [4, 5, 6]]
+>>> matrix_divided(matrix, 2.5)
+[[-0.4, -0.8, -1.2], [1.6, 2.0, 2.4]]
+>>> matrix  # original matrix remains unchanged
+[[-1, -2, -3], [4, 5, 6]]
+
+# Test case 3: Matrix with zeros and divisor as an integer
+>>> matrix = [[0, 0, 0], [0, 0, 0]]
+>>> matrix_divided(matrix, 5)
+[[0.0, 0.0, 0.0], [0.0, 0.0, 0.0]]
+>>> matrix  # original matrix remains unchanged
+[[0, 0, 0], [0, 0, 0]]
+
+# Test case 4: Matrix with a single row
+>>> matrix = [[1, 2, 3]]
+>>> matrix_divided(matrix, 2)
+[[0.5, 1.0, 1.5]]
+>>> matrix  # original matrix remains unchanged
+[[1, 2, 3]]
+
+# Test case 5: Divisor is zero
+>>> matrix = [[1, 2, 3], [4, 5, 6]]
+>>> matrix_divided(matrix, 0)
+Traceback (most recent call last):
+...
+ZeroDivisionError: division by zero
+
+# Test case 6: Invalid matrix (not a list of lists)
+>>> matrix = [1, 2, 3]
+>>> matrix_divided(matrix, 2)
+Traceback (most recent call last):
+...
+TypeError: matrix must be a matrix (list of lists) of integers/floats
+
+# Test case 7: Rows of different sizes
+>>> matrix = [[1, 2, 3], [4, 5]]
+>>> matrix_divided(matrix, 2)
+Traceback (most recent call last):
+...
+TypeError: Each row of the matrix must have the same size
+
+# Test case 8: Divisor is a string
+>>> matrix = [[1, 2, 3], [4, 5, 6]]
+>>> matrix_divided(matrix, 'abc')
+Traceback (most recent call last):
+...
+TypeError: div must be a number
+

@@ -1,0 +1,27 @@
+# Test cases for say_my_name function
+
+>>> from my_module import say_my_name
+
+# Test case 1: Both first_name and last_name provided
+>>> say_my_name("John", "Smith")
+My name is John Smith
+
+# Test case 2: Only first_name provided
+>>> say_my_name("Walter")
+My name is Walter
+
+# Test case 3: Empty strings for first_name and last_name
+>>> say_my_name("", "")
+My name is  
+
+# Test case 4: Error - first_name is not a string
+>>> say_my_name(12, "White")
+Traceback (most recent call last):
+...
+TypeError: first_name must be a string
+
+# Test case 5: Error - last_name is not a string
+>>> say_my_name("Bob", 42)
+Traceback (most recent call last):
+...
+TypeError: last_name must be a string

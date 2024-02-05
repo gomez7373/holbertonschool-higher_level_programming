@@ -1,3 +1,29 @@
+#More Data Structure
+
+check code:
+
+Flake8:
+
+flake8 file_name.py
+
+Pycodestyle:
+
+pycodestyle file_name.py
+
+
+-------------------------------
+# reminder to self... if they stop working do this again -____-*  ughh...
+-------------------------------
+ls -l ~/.local/bin/flake8
+ls -l ~/.local/bin/pycodestyle
+
+
+
+chmod +x ~/.local/bin/flake8
+chmod +x ~/.local/bin/pycodestyle
+
+
+===============================================
 Background Context
 Important notice on intranet checks for Python projects
 Starting from today:

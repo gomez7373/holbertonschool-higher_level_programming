@@ -3,4 +3,3 @@
 class Rectangle:
     """This is a docstring for the Rectangle class."""
     pass
-

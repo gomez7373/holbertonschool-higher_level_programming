@@ -1,14 +1,4 @@
 #!/usr/bin/python3
-"""
-   Class BaseGeometry.
-   Public instance method: \
-   def area(self): raises Exception with\
-   the message area() is not implemented.
-   Public instance method:\
-   def integer_validator(self, name, value):\
-   that validates the value
-"""
-
 
 class BaseGeometry:
     """Class BaseGeometry"""

@@ -1,14 +1,7 @@
 #!/usr/bin/python3
 """
-   Class BaseGeometry.
-   Public instance method: \
-   def area(self): that raises an Exception with\
-   the message area() is not implemented.
-   Public instance method:\
-   def integer_validator(self, name, value):\
-   that validates value
+Module
 """
-
 
 class BaseGeometry:
     """Class BaseGeometry"""
@@ -31,13 +24,19 @@ class BaseGeometry:
 
 class Rectangle(BaseGeometry):
     """Class Rectangle that inherits from BaseGeometry"""
+    
     def __init__(self, width, height):
         """Instantiation with width and height: \
         def __init__(self, width, height)
         width and height must be positive integers,\
-        validated by integer_validator"""
-
+        validated by integer_validator
+        
+        Args:
+            width (int): The width of the rectangle.
+            height (int): The height of the rectangle.
+        """
         self.integer_validator("width", width)
         self.__width = width
         self.integer_validator("height", height)
         self.__height = height
+

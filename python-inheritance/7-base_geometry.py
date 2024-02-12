@@ -1,4 +1,3 @@
-$ cat 7-base_geometry.py 
 #!/usr/bin/python3
 """This module creates a class named BaseGeometry"""
 

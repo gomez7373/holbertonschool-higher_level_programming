@@ -1,4 +1,13 @@
 #!/usr/bin/python3
+"""
+   Class BaseGeometry.
+   Public instance method: \
+   def area(self): that raises an Exception with\
+   the message area() is not implemented.
+   Public instance method:\
+   def integer_validator(self, name, value):\
+   that validates value
+"""
 
 
 class BaseGeometry:
@@ -6,7 +15,7 @@ class BaseGeometry:
 
     def area(self):
         """Public instance method: def area(self): \
-           that raises a Exception with\
+           that raises an Exception with\
            the message area() is not implemented."""
         raise Exception("area() is not implemented")
 
@@ -21,7 +30,7 @@ class BaseGeometry:
 
 
 class Rectangle(BaseGeometry):
-    """Class Rectangle inherits from BaseGeometry"""
+    """Class Rectangle that inherits from BaseGeometry"""
     def __init__(self, width, height):
         """Instantiation with width and height: \
         def __init__(self, width, height)

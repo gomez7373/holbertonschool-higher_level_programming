@@ -3,6 +3,7 @@
 Module - 10-square
 """
 
+
 Rectangle = __import__('9-rectangle').Rectangle
 
 
@@ -22,5 +23,6 @@ class Square(Rectangle):
             TypeError: If size is not an integer.
             ValueError: If size is not a positive integer.
         """
+        if not isinstance(size, int):
+            raise TypeError("size must be an integer")
         super().__init__(size, size)
-

@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-   6-base_geometry.py module
+
    Class BaseGeometry.
    Public instance method: \
    def area(self): that raises an Exception with\
@@ -24,7 +24,7 @@ class BaseGeometry:
         """Public instance method:\
            def integer_validator(self, name, value):\
            that validates value"""
-        if type(value) != int:
+        if not isinstance(value, int):
             raise TypeError("{:s} must be an integer".format(name))
         if value <= 0:
             raise ValueError("{:s} must be greater than 0".format(name))

@@ -1,6 +1,4 @@
 #!/usr/bin/python3
-output = ""
-for i in range(ord('z'), ord('a') - 1, -1):
-    output += chr(i) if (ord('z') - i) % 2 == 0 else chr(i - 32)
-print(output, end='')
+for i in range(ord('Z'), ord('A') - 1, -1):
+    print("{:c}".format(i + 32 if (ord('Z') - i) % 2 == 0 else i), end='')
 

@@ -8,7 +8,7 @@ import json
 class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
     """Handle HTTP requests."""
 
-    def do_get(self):  # pylint: disable=C0103
+    def do_GET(self):  # pylint: disable=C0103
         """Handle GET requests."""
         if self.path == "/":
             self.send_response(200)
@@ -28,12 +28,9 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
             self.wfile.write(b"OK")
         else:
             self.send_response(404)
-            self.send_header(
-                "Content-type",
-                "text/plain"
-            )
+            self.send_header("Content-type", "text/plain")
             self.end_headers()
-            self.wfile.write(b'Endpoint not found\n')
+            self.wfile.write(b"Endpoint not found")
 
 
 def run(
@@ -50,3 +47,4 @@ def run(
 
 if __name__ == "__main__":
     run()
+

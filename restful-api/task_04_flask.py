@@ -1,9 +1,10 @@
-#!/usr/bin/python3
+#@/usr/bin/python3
 
 from flask import Flask, jsonify, request
 
 app = Flask(__name__)
 
+# Initialize an empty dictionary to store user data
 users = {}
 
 @app.route('/')
@@ -23,24 +24,21 @@ def get_user(username):
     if username in users:
         return jsonify(users[username])
     else:
-        return "User not found", 404
+        return jsonify({"error": "User not found"}), 404
 
 @app.route('/add_user', methods=['POST'])
 def add_user():
-    data = request.json
-    if not data:
-        return jsonify({"error": "No data provided"}), 400
-    username = data.get('username')
-    if not username:
-        return jsonify({"error": "Username missing"}), 400
-    if username in users:
-        return jsonify({"error": "Username already exists"}), 400
-    users[username] = data
-    return jsonify({
-        "message": "User added",
-        "user": data
-    })
+    try:
+        data = request.get_json()
+        username = data.get('username')
+        if not username:
+            return jsonify({"error": "Username is required"}), 400
+        if username in users:
+            return jsonify({"error": "Username already exists"}), 400
+        users[username] = data
+        return jsonify({"message": "User added", "user": data}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 if __name__ == "__main__":
-    app.run()
-
+    app.run(debug=True)

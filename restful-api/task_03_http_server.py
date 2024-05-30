@@ -1,39 +1,26 @@
 #!/usr/bin/env python3
 
-from http.server import BaseHTTPRequestHandler, HTTPServer
-import json
+import unittest
+import requests
 
-class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
+class TestHTTPServer(unittest.TestCase):
 
-    def do_GET(self):
-        if self.path == '/':
-            self.send_response(200)
-            self.send_header('Content-type', 'text/plain')
-            self.end_headers()
-            self.wfile.write(b'Hello, this is a simple API!')
-        elif self.path == '/data':
-            self.send_response(200)
-            self.send_header('Content-type', 'application/json')
-            self.end_headers()
-            data = {"name": "John", "age": 30, "city": "New York"}
-            self.wfile.write(json.dumps(data).encode())
-        elif self.path == '/status':
-            self.send_response(200)
-            self.send_header('Content-type', 'text/plain')
-            self.end_headers()
-            self.wfile.write(b'OK')
-        else:
-            self.send_response(404)
-            self.send_header('Content-type', 'text/plain')
-            self.end_headers()
-            self.wfile.write(b'Endpoint not found')
+    def test_root_endpoint(self):
+        response = requests.get('http://localhost:8000/')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.text, 'Hello, this is a simple API!')
 
-def run(server_class=HTTPServer, handler_class=SimpleHTTPRequestHandler, port=8000):
-    server_address = ('', port)
-    httpd = server_class(server_address, handler_class)
-    print(f'Starting server on port {port}...')
-    httpd.serve_forever()
+    def test_data_endpoint(self):
+        response = requests.get('http://localhost:8000/data')
+        self.assertEqual(response.status_code, 200)
+        # Add assertions to check the content of the response
 
-if __name__ == '__main__':
-    run()
+    def test_status_endpoint(self):
+        response = requests.get('http://localhost:8000/status')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.text, 'OK')
+
+    def test_undefined_endpoint(self):
+        response = requests.get('http://localhost:8000/undefined')
+        self.assertEqual(response.status_code, 404)
 

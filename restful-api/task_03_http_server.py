@@ -10,7 +10,6 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
 
     def do_GET(self):  # pylint: disable=C0103
         """Handle GET requests."""
-        # Method implementation
         if self.path == "/":
             self.send_response(200)
             self.send_header("Content-type", "text/plain")
@@ -29,12 +28,19 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
             self.wfile.write(b"OK")
         else:
             self.send_response(404)
-            self.send_header("Content-type", "text/plain")
+            self.send_header(
+                "Content-type",
+                "text/plain"
+            )
             self.end_headers()
             self.wfile.write(b'Endpoint not found\n')
 
 
-def run(server_class=HTTPServer, handler_class=SimpleHTTPRequestHandler, port=8000):
+def run(
+        server_class=HTTPServer,
+        handler_class=SimpleHTTPRequestHandler,
+        port=8000
+        ):
     """Run the HTTP server."""
     server_address = ("", port)
     httpd = server_class(server_address, handler_class)

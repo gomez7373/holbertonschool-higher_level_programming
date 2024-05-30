@@ -28,7 +28,7 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
             self.wfile.write(b"OK")
         else:
             self.send_response(404)
-            self.send_header("Content-type", "text/plain")  # Fixed typo here
+            self.send_header("Content-type", "text/plain")
             self.end_headers()
             self.wfile.write(b'Endpoint not found\n')
 

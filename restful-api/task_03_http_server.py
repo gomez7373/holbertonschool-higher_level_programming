@@ -8,7 +8,7 @@ import json
 class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
     """Handle HTTP requests."""
 
-    def do_GET(self):
+    def do_GET(self):  
         """Handle GET requests."""
         if self.path == "/":
             self.send_response(200)

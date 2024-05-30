@@ -8,7 +8,7 @@ import json
 class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
     """Handle HTTP requests."""
 
-    def do_GET(self):  # pylint: disable=C0103
+    def do_get(self):  # pylint: disable=C0103
         """Handle GET requests."""
         if self.path == "/":
             self.send_response(200)

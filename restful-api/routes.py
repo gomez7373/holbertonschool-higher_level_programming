@@ -1,16 +1,16 @@
 #!/usr/bin/env python3
-from app import app
-from flask import jsonify
-from authentication import login
-from flask_jwt_extended import jwt_required
+
+from flask import request
 
 @app.route('/login', methods=['POST'])
-def login_route():
-    # Your login route implementation here
-    pass
-
-@app.route('/protected', methods=['GET'])
-@jwt_required()
-def protected():
-    # Your protected route implementation here
-    pass
+def login():
+    data = request.get_json()
+    username = data.get('username')
+    password = data.get('password')
+    if not username or not password:
+        return jsonify(error="Missing username or password"), 400
+    if username not in users or not check_password_hash(users.get(username), password):
+        return jsonify(error="Invalid username or password"), 401
+    # Generate JWT token
+    # Sample implementation
+    return jsonify(access_token="your_generated_jwt_token")

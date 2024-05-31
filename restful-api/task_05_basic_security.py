@@ -5,8 +5,7 @@ RESTful API with basic and JWT token authentication.
 
 from flask import Flask, jsonify, request
 from flask_httpauth import HTTPBasicAuth
-from flask_jwt_extended import JWTManager, jwt_required, \
-    create_access_token, get_jwt_identity
+from flask_jwt_extended import JWTManager, jwt_required, create_access_token, get_jwt_identity
 from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
@@ -20,42 +19,68 @@ jwt = JWTManager(app)
 
 # Users data (replace with your actual users)
 users = {
-    "admin": {
-        "username": "admin",
+    "admin1": {
+        "username": "admin1",
         "password": generate_password_hash("gomez_key"),
         "role": "admin"
+    },
+    "user1": {
+        "username": "user1",
+        "password": generate_password_hash("password"),
+        "role": "user"
     }
 }
 
 # Custom error handlers for JWT
 @jwt.unauthorized_loader
 def handle_unauthorized_error():
+    """
+    Custom unauthorized error handler for JWT.
+    """
     return jsonify({"error": "Missing or invalid token"}), 401
 
 @jwt.invalid_token_loader
 def handle_invalid_token_error():
+    """
+    Custom invalid token error handler for JWT.
+    """
     return jsonify({"error": "Invalid token"}), 401
 
 @jwt.expired_token_loader
 def handle_expired_token_error():
+    """
+    Custom expired token error handler for JWT.
+    """
     return jsonify({"error": "Token has expired"}), 401
 
 @jwt.revoked_token_loader
 def handle_revoked_token_error():
+    """
+    Custom revoked token error handler for JWT.
+    """
     return jsonify({"error": "Token has been revoked"}), 401
 
 @jwt.needs_fresh_token_loader
 def handle_needs_fresh_token_error():
+    """
+    Custom needs fresh token error handler for JWT.
+    """
     return jsonify({"error": "Fresh token required"}), 401
 
 # Basic authentication callback
 @auth.verify_password
 def verify_password(username, password):
     """
-    Verify the password for the given username.
+    Verify the username and password for basic authentication.
+
+    Args:
+        username (str): The username.
+        password (str): The password.
+
+    Returns:
+        str: The username if authentication succeeds, otherwise None.
     """
-    if username in users and \
-            check_password_hash(users[username]['password'], password):
+    if username in users and check_password_hash(users[username]['password'], password):
         return username
 
 # Protected route with basic authentication
@@ -71,16 +96,14 @@ def basic_protected():
 @app.route('/login', methods=['POST'])
 def login():
     """
-    Accepts JSON payload with username and password.
-    Returns a JWT token if credentials are valid.
+    Accepts JSON payload with username and password. Returns a JWT token if credentials are valid.
     """
     data = request.json
     username = data.get('username')
     password = data.get('password')
     if not username or not password:
         return jsonify({"error": "Missing username or password"}), 400
-    if username not in users or \
-            not check_password_hash(users[username]['password'], password):
+    if username not in users or not check_password_hash(users[username]['password'], password):
         return jsonify({"error": "Invalid username or password"}), 401
     access_token = create_access_token(identity=username)
     return jsonify(access_token=access_token), 200

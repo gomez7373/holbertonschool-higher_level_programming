@@ -1,55 +1,41 @@
 #!/usr/bin/env python3
-from flask import Flask, jsonify, request, Response
-from typing import Dict, Union
+
+from flask import Flask, jsonify, request
 
 app = Flask(__name__)
 
-# Dictionary to store user data
-users: Dict[str, Dict[str, Union[str, int]]] = {}
+# Sample user data stored in memory
+users = {
+    "jane": {"name": "Jane", "age": 28, "city": "Los Angeles"},
+    "john": {"name": "John", "age": 30, "city": "New York"}
+}
 
-
-@app.route('/')
-def home() -> str:
-    """Route for the root URL."""
+# Route for the root URL
+@app.route("/")
+def home():
     return "Welcome to the Flask API!"
 
-
-@app.route('/data')
-def get_data() -> Response:
-    """Route to return a JSON response
-    with a list of all usernames stored in the API."""
+# Route to get all usernames
+@app.route("/data")
+def get_usernames():
     return jsonify(list(users.keys()))
 
+# Route to get user by username
+@app.route("/users/<username>")
+def get_user(username):
+    user = users.get(username)
+    if user:
+        return jsonify(user)
+    else:
+        return jsonify({"error": "User not found"}), 404
 
-@app.route('/status')
-def status() -> str:
-    """Route to return 'OK'."""
-    return "OK"
-
-
-@app.route('/users/<username>')
-def get_user(username: str) -> Union[Dict[str, Union[str, int]], Response]:
-    """Route to return the full object
-    corresponding to the provided username."""
-    if username in users:
-        return jsonify(users[username])
-    return jsonify({"error": "User not found"}), 404
-
-
-@app.route('/add_user', methods=['POST'])
-def add_user() -> Response:
-    """Route to add a new user to the API."""
-    data: Dict[str, Union[str, int]] = request.json
-    if not data:
-        return jsonify({"error": "No data provided"}), 400
-    username = data.get('username')
-    if not username:
-        return jsonify({"error": "Username is required"}), 400
-    if username in users:
-        return jsonify({"error": "Username already exists"}), 400  # Return an error if the username already exists
-    users[username] = data
-    return jsonify({"message": "User added", "user": data}), 200
-
+# Route to add a new user
+@app.route("/add_user", methods=["POST"])
+def add_user():
+    data = request.get_json()
+    username = data.get("username")
+    users[username] = data  # Assuming the data contains the full user object
+    return jsonify({"message": "User added", "user": data}), 201
 
 if __name__ == "__main__":
     app.run(debug=True)

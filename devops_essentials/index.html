@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dockerfile Contents</title>
+    <style>
+        body {
+            background-color: #00FF00; /* Neon green background color */
+        }
+        pre {
+            color: #FFFFFF; /* White text color */
+        }
+    </style>
+</head>
+<body>
+    <h1>Contents of Dockerfile in docker-alpine-extended:</h1>
+    <pre>
+        FROM alpine:latest
+
+        # Install the curl package
+        RUN apk add --no-cache curl
+
+        # Add the configuration file to a suitable location in the container
+        COPY config.txt /app/config.txt
+
+        # Set the default command to run when the container starts
+        CMD ["sh", "-c", "trap 'echo BYE! && exit 0' INT; echo Extended Alpine Image; tail -f /dev/null"]
+
+        Contents of config.txt:
+
+        Welcome to Docker!
+    </pre>
+</body>
+</html>
+

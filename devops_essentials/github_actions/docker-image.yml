@@ -12,6 +12,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v2
         with:
@@ -20,7 +25,23 @@ jobs:
           password: ${{ secrets.CR_PAT }}
 
       - name: Build Docker image
-        run: docker build -t ghcr.io/${{ github.repository_owner }}/${{ github.repository }}:latest .
+        run: |
+          echo '<!DOCTYPE html>' > index.html
+          echo '<html lang="en">' >> index.html
+          echo '<head>' >> index.html
+          echo '<meta charset="UTF-8">' >> index.html
+          echo '<meta name="viewport" content="width=device-width, initial-scale=1.0">' >> index.html
+          echo '<title>Docker Image Build and Push</title>' >> index.html
+          echo '<style>' >> index.html
+          echo 'body {' >> index.html
+          echo '    background-color: #00FF00; /* Neon green background color */' >> index.html
+          echo '}' >> index.html
+          echo '</style>' >> index.html
+          echo '</head>' >> index.html
+          echo '<body>' >> index.html
+          echo '<h1>Docker Image Build and Push</h1>' >> index.html
+          echo '</body>' >> index.html
+          echo '</html>' >> index.html
 
       - name: Push Docker image
         run: docker push ghcr.io/${{ github.repository_owner }}/${{ github.repository }}:latest

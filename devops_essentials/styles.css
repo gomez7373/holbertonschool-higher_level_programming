@@ -1,0 +1,10 @@
+body {
+    background-color: #39ff14; /* Neon green color */
+    border: 10px solid #800080; /* Purple border */
+}
+
+h1, p {
+    color: white; /* Text color */
+    text-align: center; /* Center-align text */
+}
+

@@ -1,27 +1,56 @@
-from flask import Flask, request, jsonify
-from werkzeug.security import generate_password_hash, check_password_hash
-import jwt
+#!/usr/bin/env python3
+
+from flask import Flask, jsonify, request
 
 app = Flask(__name__)
 
-# Your users dictionary
+# Sample user data stored in memory
 users = {
-    "user1": {"username": "user1", "password": generate_password_hash("password")}
+    "jane": {"username": "jane", "name": "Jane", "age": 28, "city": "Los Angeles"},
+    "john": {"username": "john", "name": "John", "age": 30, "city": "New York"}
 }
 
-# Secret key for token generation
-SECRET_KEY = "your_secret_key_here"
+# Route for the root URL
+@app.route("/")
+def home():
+    return "Welcome to the Flask API!"
 
-@app.route('/login', methods=['POST'])
-def login():
+# Route to get all usernames
+@app.route("/data")
+def get_usernames():
+    return jsonify(list(users.keys()))
+
+# Route to get user by username
+@app.route("/users/<username>")
+def get_user(username):
+    user = users.get(username)
+    if user:
+        return jsonify(user)
+    else:
+        return jsonify({"error": "User not found"}), 404
+
+# Route to check status
+@app.route("/status")
+def status():
+    return "OK"
+
+# Route to add a new user
+@app.route("/add_user", methods=["POST"])
+def add_user():
     data = request.get_json()
-    username = data.get('username')
-    password = data.get('password')
-    if not username or not password:
-        return jsonify(error="Missing username or password"), 400
-    if username not in users or not check_password_hash(users.get(username).get('password'), password):
-        return jsonify(error="Invalid username or password"), 401
-    # Generate JWT token
-    token = jwt.encode({'username': username}, SECRET_KEY, algorithm='HS256')
-    return jsonify(access_token=token), 200
+    username = data.get("username")
+    if username in users:
+        return jsonify({"error": "Username already exists"}), 400
+    else:
+        # Add the new user to the users dictionary
+        users[username] = {
+            "username": username,
+            "name": data.get("name"),
+            "age": data.get("age"),
+            "city": data.get("city")
+        }
+        return jsonify({"message": "User added", "user": users[username]}), 201
+
+if __name__ == "__main__":
+    app.run(debug=True)
 

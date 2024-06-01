@@ -5,7 +5,10 @@ from flask import Flask, jsonify, request
 app = Flask(__name__)
 
 # Sample user data stored in memory
-users = {}
+users = {
+    "jane": {"username": "jane", "name": "Jane", "age": 28, "city": "Los Angeles"},
+    "john": {"username": "john", "name": "John", "age": 30, "city": "New York"}
+}
 
 # Route for the root URL
 @app.route("/")
@@ -26,22 +29,21 @@ def get_user(username):
     else:
         return jsonify({"error": "User not found"}), 404
 
+# Route to check status
+@app.route("/status")
+def status():
+    return "OK"
+
 # Route to add a new user
 @app.route("/add_user", methods=["POST"])
 def add_user():
     data = request.get_json()
     username = data.get("username")
-    if not username:
-        return jsonify({"error": "Username is required"}), 400
     if username in users:
-        return jsonify({"error": "User already exists"}), 400
-    users[username] = data  # Assuming the data contains the full user object
-    return jsonify({"message": "User added", "user": data}), 201
-
-# Route to get the status of the API
-@app.route("/status")
-def status():
-    return jsonify({"status": "OK"})
+        return jsonify({"error": "Username already exists"}), 400
+    else:
+        users[username] = data  # Assuming the data contains the full user object
+        return jsonify({"message": "User added", "user": data}), 201
 
 if __name__ == "__main__":
     app.run(debug=True)

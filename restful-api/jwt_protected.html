@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JWT Protected Endpoint</title>
+</head>
+<body>
+<h1>JWT Protected Endpoint</h1>
+<div id="response"></div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  var token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MTcyNzcxMjcsIm5iZiI6MTcxNzI3NzEyNywianRpIjoiYWNhZTcxODYtOWNiMi00MGY4LWJlODEtYjJiMzg3NDM5YzBlIiwiZXhwIjoxNzE3Mjc4MDI3LCJpZGVudGl0eSI6ImFkbWluMSIsImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.gqAq0GrJqx4f0N2Lc9boxkpZ61g3AX3cWD-1WjOCVYk";
+  var url = "http://127.0.0.1:5000/jwt-protected";
+
+  var xhr = new XMLHttpRequest();
+  xhr.open("GET", url);
+  xhr.setRequestHeader("Authorization", "Bearer " + token);
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200) {
+        document.getElementById("response").textContent = xhr.responseText;
+      } else {
+        document.getElementById("response").textContent = "Error: " + xhr.status;
+      }
+    }
+  };
+  xhr.send();
+});
+</script>
+</body>
+</html>
+

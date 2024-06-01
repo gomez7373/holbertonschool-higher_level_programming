@@ -83,6 +83,14 @@ def verify_password(username, password):
     if username in users and check_password_hash(users[username]['password'], password):
         return username
 
+# Root route
+@app.route('/')
+def index():
+    """
+    Root route that returns a welcome message.
+    """
+    return "Welcome to the RESTful API with Basic and JWT authentication!"
+
 # Protected route with basic authentication
 @app.route('/basic-protected')
 @auth.login_required
@@ -115,7 +123,6 @@ def jwt_protected():
     """
     Returns a message if the user provides a valid JWT token.
     """
-    current_user = get_jwt_identity()
     return "JWT Auth: Access Granted"
 
 # Role-based protected route

@@ -1,8 +1,8 @@
-#!/usr/bin/env python3
-
-from flask import request, jsonify
+from flask import Flask, request, jsonify
 from werkzeug.security import generate_password_hash, check_password_hash
 import jwt
+
+app = Flask(__name__)
 
 # Your users dictionary
 users = {

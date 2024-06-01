@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 from flask import Flask, jsonify, request
 
 app = Flask(__name__)
@@ -42,9 +40,7 @@ def add_user():
     if username in users:
         return jsonify({"error": "Username already exists"}), 400
     else:
-        # Add user to the dictionary
-        users[username] = data
-        # Return confirmation message with user's data
+        users[username] = data  # Assuming the data contains the full user object
         return jsonify({"message": "User added", "user": data}), 201
 
 if __name__ == "__main__":

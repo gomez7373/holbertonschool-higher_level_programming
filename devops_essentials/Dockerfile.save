@@ -9,4 +9,3 @@ CMD echo "Hello, World!"
 
 # Task 3 (modified)
 VOLUME /data
-

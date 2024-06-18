@@ -28,6 +28,9 @@ def test_task_13():
     )
     cursor = connection.cursor()
 
+    # Create and populate genres table
+    run_sql_script('create_genres_table.sql', 'hbtn_0d_tvshows')
+
     # Run the SQL script
     script_name = '13-count_shows_by_genre.sql'
     run_sql_script(script_name, 'hbtn_0d_tvshows')

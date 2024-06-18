@@ -1,11 +1,14 @@
--- List all genres not linked to the show "Dexter"
+-- Select LEFT JOIN with Where clause
+-- Execute: cat 14-my_genres.sql | mysql -hlocalhost -uroot -p hbtn_0d_tvshows
 
 SELECT name
 FROM tv_genres
-WHERE id NOT IN (
-    SELECT genre_id
-    FROM tv_show_genres
-    WHERE show_id = (SELECT id FROM tv_shows WHERE title = 'Dexter')
-)
-ORDER BY name ASC;
+WHERE name
+NOT IN (SELECT a.name FROM tv_genres a
+        RIGHT JOIN tv_show_genres b
+        ON a.id = b.genre_id
+        RIGHT JOIN tv_shows c
+        ON b.show_id = c.id
+        WHERE c.title = 'Dexter')
+ORDER BY 1 ASC;
 

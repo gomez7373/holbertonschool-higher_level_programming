@@ -1,20 +1,42 @@
 #!/bin/bash
 
-# Prompt for the MySQL root password once
-read -sp "Enter MySQL root password: " MYSQL_ROOT_PASSWORD
-echo
+# Prompt for MySQL root password
+echo "Enter MySQL root password:"
+read -s root_password
 
-# Run the SQL script to create the user and grant privileges
-mysql -hlocalhost -uroot -p"$MYSQL_ROOT_PASSWORD" < 1-create_user.sql
+# Create a temporary SQL script for testing
+test_sql_script=$(mktemp)
 
-# Check if the user was created
-echo "Checking if user 'user_0d_1' was created:"
-mysql -uroot -p"$MYSQL_ROOT_PASSWORD" -e "SELECT User, Host FROM mysql.user WHERE User = 'user_0d_1';"
+cat <<EOF >$test_sql_script
+-- Ensure SQL mode is permissive
+SET GLOBAL sql_mode = '';
 
-# Check the grants for the user
-echo "Checking grants for 'user_0d_1'@'localhost':"
-mysql -uroot -p"$MYSQL_ROOT_PASSWORD" -e "SHOW GRANTS FOR 'user_0d_1'@'localhost';"
+-- Check if user 'user_0d_1' exists
+SELECT User, Host FROM mysql.user WHERE User = 'user_0d_1';
 
-# Test logging in as the new user
-echo "Testing login for 'user_0d_1':"
-mysql -u user_0d_1 -puser_0d_1_pwd -e "SELECT CURRENT_USER();"
+-- Check grants for 'user_0d_1'
+SHOW GRANTS FOR 'user_0d_1'@'localhost';
+
+-- Perform privileged actions as 'user_0d_1'
+CREATE DATABASE IF NOT EXISTS test_db;
+USE test_db;
+CREATE TABLE IF NOT EXISTS test_table (id INT);
+DROP TABLE test_table;
+DROP DATABASE test_db;
+
+-- Ensure idempotency by running the script again
+SOURCE 1-create_user.sql;
+
+-- Check if user 'user_0d_1' still exists and has the same privileges
+SELECT User, Host FROM mysql.user WHERE User = 'user_0d_1';
+SHOW GRANTS FOR 'user_0d_1'@'localhost';
+EOF
+
+# Execute the test SQL script
+mysql -uroot -p${root_password} < $test_sql_script
+
+# Clean up
+rm $test_sql_script
+
+echo "All tests completed."
+

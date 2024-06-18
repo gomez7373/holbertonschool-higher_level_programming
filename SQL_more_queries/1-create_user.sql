@@ -6,12 +6,9 @@
 -- Create user if not exists and set password
 CREATE USER IF NOT EXISTS 'user_0d_1'@'localhost' IDENTIFIED BY 'user_0d_1_pwd';
 
--- Ensure the password is set correctly
-ALTER USER 'user_0d_1'@'localhost' IDENTIFIED BY 'user_0d_1_pwd';
-
--- Grant all privileges
+-- Grant all privileges to the user
 GRANT ALL PRIVILEGES ON *.* TO 'user_0d_1'@'localhost' WITH GRANT OPTION;
 
--- Flush privileges
+-- Apply changes
 FLUSH PRIVILEGES;
 

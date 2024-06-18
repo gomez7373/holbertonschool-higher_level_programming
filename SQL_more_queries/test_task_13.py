@@ -13,7 +13,9 @@ def run_sql_script(script_name, db_name):
         autocommit=True
     )
     cursor = connection.cursor()
-    cursor.execute(sql_script)
+    for statement in sql_script.split(';'):
+        if statement.strip():
+            cursor.execute(statement)
     connection.close()
 
 # Function to test the output of the SQL script

@@ -1,4 +1,4 @@
--- Lists all genres and the number of shows linked to each
+-- List all genres from hbtn_0d_tvshows and display the number of shows linked to each
 
 SELECT
     genres.name AS genre,
@@ -10,8 +10,9 @@ JOIN
 ON
     genres.id = tv_show_genres.genre_id
 GROUP BY
-    genres.name
+    genres.id, genres.name
 HAVING
-    number_of_shows > 0
+    COUNT(tv_show_genres.show_id) > 0
 ORDER BY
-    number_of_shows DESC;
+    number_of_shows DESC, genre ASC;
+

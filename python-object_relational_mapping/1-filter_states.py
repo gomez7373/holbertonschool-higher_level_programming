@@ -5,26 +5,29 @@ from the database hbtn_0e_0_usa.
 It takes 3 arguments: mysql username, mysql password, and database name.
 """
 
-from sys import argv
-
+import sys
 import MySQLdb
 
 if __name__ == "__main__":
-    # Connect to the MySQL database
-    database = MySQLdb.connect(
+
+    username = sys.argv[1]
+    password = sys.argv[2]
+    dbname = sys.argv[3]
+
+    # Connect to the MySQL server
+    db = MySQLdb.connect(
         host="localhost",
-        user=argv[1],
-        passwd=argv[2],
-        db=argv[3],
         port=3306,
+        user=username,
+        passwd=password,
+        db=dbname,
+        charset="utf8"
     )
 
-    with database.cursor() as cursor:
-        query = "SELECT * FROM states WHERE name LIKE 'N%' ORDER BY id ASC"
-        cursor.execute(query)
-        result = cursor.fetchall()
-        if result:
-            print(*result, sep="\n")
-
-    # Close the connection
-    database.close()
+    cur = db.cursor()
+    cur.execute("SELECT * FROM states ORDER BY states.id ASC")
+    states = cur.fetchall()
+    for state in states:
+        if state[1].startswith("N"):
+            print(state)
+    cur.close()

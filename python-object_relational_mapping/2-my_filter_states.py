@@ -6,9 +6,8 @@ It takes 4 arguments: mysql username, mysql password, database name,
 and state name.
 """
 
+import sys
 import MySQLdb
-from getpass import getpass
-from sys import argv
 
 if __name__ == "__main__":
 

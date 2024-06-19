@@ -1,37 +1,48 @@
 #!/usr/bin/python3
 """
-This script takes in arguments and displays all values in the states
+This script takes in an argument and displays all values in the states
 table of hbtn_0e_0_usa where name matches the argument.
 It takes 4 arguments: mysql username, mysql password, database name,
-and state name. This script is safe from SQL injections.
+and state name.
 """
 
 import MySQLdb
-from getpass import getpass
-from sys import argv
+from sys import argv, exit
 
 if __name__ == "__main__":
-    mysql_username = argv[1]
-    mysql_password = getpass("Enter MySQL password: ")
-    database_name = argv[3]
-    state_name = argv[4]
+    state = argv[-1]
+    if any(not c.isalpha() for c in state):
+        exit(1)
 
     try:
-        db = MySQLdb.connect(
+        # Connect to the MySQL database
+        database = MySQLdb.connect(
             host="localhost",
-            user=mysql_username,
-            passwd=mysql_password,
-            db=database_name,
+            user=argv[1],
+            passwd=argv[2],
+            db=argv[3],
             port=3306,
         )
-        cursor = db.cursor()
-        query = "SELECT * FROM states WHERE name = %s ORDER BY id ASC"
-        cursor.execute(query, (state_name,))
-        results = cursor.fetchall()
-        for row in results:
-            print(row)
 
-        cursor.close()
-        db.close()
+        # Create a cursor to interact with the database
+        with database.cursor() as cursor:
+            # Create the SQL query using format
+            query = (
+                "SELECT * FROM states "
+                "WHERE name LIKE BINARY '{}' "
+                "ORDER BY id ASC".format(state)
+            )
+            cursor.execute(query)
+
+            # Fetch all the matching rows
+            result = cursor.fetchall()
+
+            # Print the results
+            if result:
+                print(*result, sep="\n")
+
+        # Close the database connection
+        database.close()
+
     except MySQLdb.OperationalError as e:
         print(f"Error connecting to the database: {e}")

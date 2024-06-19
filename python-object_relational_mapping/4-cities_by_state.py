@@ -9,11 +9,12 @@ from sys import argv
 
 import MySQLdb
 
+import MySQLdb
+from sys import argv, exit
+
 if __name__ == "__main__":
-    if len(argv) != 4:
-        print(
-            "Usage: ./4-cities_by_state.py <mysql username> <mysql password> <database name>"
-        )
+    state = argv[-1]
+    if any(not c.isalpha() for c in state):
         exit(1)
 
     # Capture the command-line arguments
@@ -31,10 +32,11 @@ if __name__ == "__main__":
     )
 
     with database.cursor() as cursor:
-        cursor.execute(
-            "SELECT cities.id, cities.name, states.name FROM cities "
-            "JOIN states ON cities.state_id = states.id "
-            "ORDER BY cities.id ASC"
+        # Create the SQL query using format
+        query = (
+            "SELECT * FROM states "
+            "WHERE name LIKE BINARY '{}' "
+            "ORDER BY id ASC".format(state)
         )
         result = cursor.fetchall()
         if result:

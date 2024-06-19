@@ -4,17 +4,14 @@ This script lists all cities from the database hbtn_0e_4_usa.
 It takes 3 arguments: mysql username, mysql password, and database name.
 """
 
-from getpass import getpass
+import MySQLdb
 from sys import argv
-
-import MySQLdb
-
-import MySQLdb
-from sys import argv, exit
+from getpass import getpass
 
 if __name__ == "__main__":
-    state = argv[-1]
-    if any(not c.isalpha() for c in state):
+    # Check for correct number of arguments
+    if len(argv) != 4:
+        print("Usage: ./4-cities_by_state.py <mysql username> <mysql password> <database name>")
         exit(1)
 
     # Capture the command-line arguments
@@ -32,11 +29,10 @@ if __name__ == "__main__":
     )
 
     with database.cursor() as cursor:
-        # Create the SQL query using format
-        query = (
-            "SELECT * FROM states "
-            "WHERE name LIKE BINARY '{}' "
-            "ORDER BY id ASC".format(state)
+        cursor.execute(
+            "SELECT cities.id, cities.name, states.name FROM cities "
+            "JOIN states ON cities.state_id = states.id "
+            "ORDER BY cities.id ASC"
         )
         result = cursor.fetchall()
         if result:

@@ -7,7 +7,7 @@ import subprocess
 
 def run_checker():
     # Define the command and arguments to run the student's script
-    command = ["./0-select_states.py", "root", "root", "hbtn_0e_0_usa"]
+    command = ["./0-select_states.py", "root", "sgc91", "hbtn_0e_0_usa"]
 
     # Run the student's script and capture the output
     result = subprocess.run(command, capture_output=True, text=True)

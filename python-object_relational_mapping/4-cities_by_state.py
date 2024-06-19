@@ -18,16 +18,16 @@ if __name__ == "__main__":
         sys.exit(1)
 
     # Capture the command-line arguments
-    MYSQL_USERNAME = sys.argv[1]
-    MYSQL_PASSWORD = getpass(prompt="Enter MySQL password: ")
-    DATABASE_NAME = sys.argv[3]
+    mysql_username = sys.argv[1]
+    mysql_password = getpass(prompt="Enter MySQL password: ")
+    database_name = sys.argv[3]
 
     # Connect to the MySQL database
     database = MySQLdb.connect(
         host="localhost",
-        user=MYSQL_USERNAME,
-        passwd=MYSQL_PASSWORD,
-        db=DATABASE_NAME,
+        user=mysql_username,
+        passwd=mysql_password,
+        db=database_name,
         port=3306,
     )
 

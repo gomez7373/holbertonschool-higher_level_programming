@@ -31,11 +31,7 @@ if __name__ == "__main__":
         # Create a cursor to interact with the database
         with database.cursor() as cursor:
             # Create the SQL query using f-string
-            query =
-                (
-                f"SELECT * FROM states WHERE name =
-                '{state_name}' " "ORDER BY id ASC"
-                )   
+            query = f"SELECT * FROM states WHERE name = '{state_name}' ORDER BY id ASC"
             cursor.execute(query)
 
             # Fetch all the matching rows

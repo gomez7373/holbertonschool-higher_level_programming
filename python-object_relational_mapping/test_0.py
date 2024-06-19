@@ -28,7 +28,7 @@ def run_checker():
         print("Expected output:")
         print(expected_output)
         print("Actual output:")
-        print(result.stdout)
+        print(result.stdout.strip())
 
 if __name__ == "__main__":
     run_checker()

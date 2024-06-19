@@ -6,20 +6,21 @@ It takes 4 arguments: mysql username, mysql password, database name,
 and state name.
 """
 
-from getpass import getpass
-from sys import argv
-
 import MySQLdb
+from sys import argv
+from getpass import getpass
 
 if __name__ == "__main__":
-    # Capture the command-line arguments
+    if len(argv) < 5:
+        print("Usage: ./2-my_filter_states.py <mysql username> <mysql password> <database name> <state name>")
+        exit(1)
+
     mysql_username = argv[1]
-    mysql_password = getpass(prompt="Enter MySQL password: ")
-    database_name = argv[2]
-    state_name = argv[3]
+    mysql_password = argv[2] if argv[2] != "prompt" else getpass(prompt="Enter MySQL password: ")
+    database_name = argv[3]
+    state_name = argv[4]
 
     try:
-        # Connect to the MySQL database
         database = MySQLdb.connect(
             host="localhost",
             user=mysql_username,
@@ -27,21 +28,14 @@ if __name__ == "__main__":
             db=database_name,
             port=3306,
         )
-
-        # Create a cursor to interact with the database
         with database.cursor() as cursor:
-            # Create the SQL query using f-string
-            query = f"SELECT * FROM states WHERE name = '{state_name}' ORDER BY id ASC"
-            cursor.execute(query)
-
-            # Fetch all the matching rows
+            cursor.execute(
+                "SELECT * FROM states WHERE name LIKE BINARY '{}' ORDER BY id ASC".format(state_name)
+            )
             results = cursor.fetchall()
+            if results:
+                print(*results, sep="\n")
 
-            # Print the results
-            for row in results:
-                print(row)
-
-        # Close the database connection
         database.close()
 
     except MySQLdb.OperationalError as e:

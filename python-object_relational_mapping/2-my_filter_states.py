@@ -6,9 +6,10 @@ It takes 4 arguments: mysql username, mysql password, database name,
 and state name.
 """
 
-import MySQLdb
 from getpass import getpass
 from sys import argv
+
+import MySQLdb
 
 if __name__ == "__main__":
     # Capture the command-line arguments
@@ -31,8 +32,7 @@ if __name__ == "__main__":
         with database.cursor() as cursor:
             # Create the SQL query using f-string
             query = (
-                f"SELECT * FROM states WHERE name = '{state_name}' "
-                "ORDER BY id ASC"
+                f"SELECT * FROM states WHERE name = '{state_name}' " "ORDER BY id ASC"
             )
             cursor.execute(query)
 

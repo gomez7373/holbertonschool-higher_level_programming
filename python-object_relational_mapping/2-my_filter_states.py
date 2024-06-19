@@ -7,16 +7,21 @@ and state name.
 """
 
 import MySQLdb
-from sys import argv
 from getpass import getpass
+from sys import argv
 
 if __name__ == "__main__":
     if len(argv) < 5:
-        print("Usage: ./2-my_filter_states.py <mysql username> <mysql password> <database name> <state name>")
+        print(
+            "Usage: ./2-my_filter_states.py <mysql username> <mysql password> "
+            "<database name> <state name>"
+        )
         exit(1)
 
     mysql_username = argv[1]
-    mysql_password = argv[2] if argv[2] != "prompt" else getpass(prompt="Enter MySQL password: ")
+    mysql_password = (
+        argv[2] if argv[2] != "prompt" else getpass(prompt="Enter MySQL password: ")
+    )
     database_name = argv[3]
     state_name = argv[4]
 
@@ -29,9 +34,11 @@ if __name__ == "__main__":
             port=3306,
         )
         with database.cursor() as cursor:
-            cursor.execute(
-                "SELECT * FROM states WHERE name LIKE BINARY '{}' ORDER BY id ASC".format(state_name)
+            query = (
+                "SELECT * FROM states WHERE name LIKE BINARY '{}' "
+                "ORDER BY id ASC".format(state_name)
             )
+            cursor.execute(query)
             results = cursor.fetchall()
             if results:
                 print(*results, sep="\n")

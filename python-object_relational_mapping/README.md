@@ -1,4 +1,4 @@
-#The project "Python - Object-relational mapping" involves linking databases with Python using both direct SQL queries and Object Relational Mappers (ORMs). Here's a breakdown of the instructions and tasks involved:
+The project "Python - Object-relational mapping" involves linking databases with Python using both direct SQL queries and Object Relational Mappers (ORMs). Here's a breakdown of the instructions and tasks involved:
 ------------------------------------------------------------ 
 
 #Background Context

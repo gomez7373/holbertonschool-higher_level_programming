@@ -11,39 +11,39 @@ from getpass import getpass
 from sys import argv
 
 if __name__ == "__main__":
-    if len(argv) < 5:
-        print(
-            "Usage: ./2-my_filter_states.py <mysql username> <mysql password> "
-            "<database name> <state name>"
-        )
-        exit(1)
 
-    mysql_username = argv[1]
-    mysql_password = (
-        argv[2] if argv[2] != "prompt" else getpass(prompt="Enter MySQL password: ")
+    username = sys.argv[1]
+    password = sys.argv[2]
+    dbname = sys.argv[3]
+    state_name = sys.argv[4]
+
+    # Connect to the MySQL server
+    db = MySQLdb.connect(
+        host="localhost",
+        port=3306,
+        user=username,
+        passwd=password,
+        db=dbname,
+        charset="utf8"
     )
-    database_name = argv[3]
-    state_name = argv[4]
 
-    try:
-        database = MySQLdb.connect(
-            host="localhost",
-            user=mysql_username,
-            passwd=mysql_password,
-            db=database_name,
-            port=3306,
-        )
-        with database.cursor() as cursor:
-            query = (
-                "SELECT * FROM states WHERE name LIKE BINARY '{}' "
-                "ORDER BY id ASC".format(state_name)
-            )
-            cursor.execute(query)
-            results = cursor.fetchall()
-            if results:
-                print(*results, sep="\n")
+    # Create a cursor object
+    cursor = db.cursor()
 
-        database.close()
+    # Prepare SQL query
+    query = """
+SELECT * FROM states WHERE name LIKE BINARY '{}' ORDER BY states.id ASC"""
+    query = query.format(state_name)
+    # Execute the query with user input
+    cursor.execute(query)
 
-    except MySQLdb.OperationalError as e:
-        print(f"Error connecting to the database: {e}")
+    # Fetch all the results
+    states = cursor.fetchall()
+
+    # Print the results
+    for state in states:
+        print(state)
+
+    # Close the cursor and the connection
+    cursor.close()
+    db.close()

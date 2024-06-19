@@ -1,4 +1,5 @@
-*The project "Python - Object-relational mapping" involves linking databases with Python using both direct SQL queries and Object Relational Mappers (ORMs). Here's a breakdown of the instructions and tasks involved:
+#The project "Python - Object-relational mapping" involves linking databases with Python using both direct SQL queries and Object Relational Mappers (ORMs). Here's a breakdown of the instructions and tasks involved:
+------------------------------------------------------------ 
 
 #Background Context
 
@@ -37,4 +38,5 @@
 
 - $ sudo pip3 install SQLAlchemy
 
-+ PROGRESS IS NOT LINEAL, REMIND YOURSELF THAT IT IS OK TO MESS UP IN THE PROGRESS OF LEARNING <3 I SOMETIMES FORGET TO BE NICE TO MYSELF ALSO.
+
+#  PROGRESS IS NOT LINEAL, REMIND YOURSELF THAT IT IS OK TO MESS UP IN THE PROGRESS OF LEARNING <3 I SOMETIMES FORGET TO BE NICE TO MYSELF ALSO.

@@ -6,6 +6,10 @@ and then compares the output to the expected output using unittest.
 
 import subprocess
 import unittest
+from colorama import init, Fore, Style
+
+# Initialize colorama
+init()
 
 def run_command(command):
     """Run a command and return its output and return code."""
@@ -16,45 +20,45 @@ def run_pylint():
     """Run pylint on the 1-filter_states.py file and print the output."""
     command = ["pylint", "1-filter_states.py"]
     stdout, stderr, returncode = run_command(command)
-    print("Pylint output:\n", stdout)
+    print(Fore.BLUE + "Pylint output:\n" + Style.RESET_ALL + stdout)
     if stderr:
-        print("Pylint errors:\n", stderr)
+        print(Fore.RED + "Pylint errors:\n" + Style.RESET_ALL + stderr)
     return returncode
 
 def run_mypy():
     """Run mypy on the 1-filter_states.py file and print the output."""
     command = ["mypy", "1-filter_states.py"]
     stdout, stderr, returncode = run_command(command)
-    print("Mypy output:\n", stdout)
+    print(Fore.BLUE + "Mypy output:\n" + Style.RESET_ALL + stdout)
     if stderr:
-        print("Mypy errors:\n", stderr)
+        print(Fore.RED + "Mypy errors:\n" + Style.RESET_ALL + stderr)
     return returncode
 
 def run_flake8():
     """Run flake8 on the 1-filter_states.py file and print the output."""
-    command = ["flake8", "1-filter_states.py"]
+    command = ["flake8", "--config=.flake8", "1-filter_states.py"]
     stdout, stderr, returncode = run_command(command)
-    print("Flake8 output:\n", stdout)
+    print(Fore.BLUE + "Flake8 output:\n" + Style.RESET_ALL + stdout)
     if stderr:
-        print("Flake8 errors:\n", stderr)
+        print(Fore.RED + "Flake8 errors:\n" + Style.RESET_ALL + stderr)
     return returncode
 
 def run_black():
     """Run black on the 1-filter_states.py file and print the output."""
     command = ["black", "--check", "1-filter_states.py"]
     stdout, stderr, returncode = run_command(command)
-    print("Black output:\n", stdout)
+    print(Fore.BLUE + "Black output:\n" + Style.RESET_ALL + stdout)
     if stderr:
-        print("Black errors:\n", stderr)
+        print(Fore.RED + "Black errors:\n" + Style.RESET_ALL + stderr)
     return returncode
 
 def run_isort():
     """Run isort on the 1-filter_states.py file and print the output."""
     command = ["isort", "--check-only", "1-filter_states.py"]
     stdout, stderr, returncode = run_command(command)
-    print("isort output:\n", stdout)
+    print(Fore.BLUE + "isort output:\n" + Style.RESET_ALL + stdout)
     if stderr:
-        print("isort errors:\n", stderr)
+        print(Fore.RED + "isort errors:\n" + Style.RESET_ALL + stderr)
     return returncode
 
 class TestOutput(unittest.TestCase):
@@ -77,36 +81,36 @@ class TestOutput(unittest.TestCase):
 if __name__ == "__main__":
     pylint_returncode = run_pylint()
     if pylint_returncode == 0 or pylint_returncode == 2:  # Allow filename warning
-        print("Pylint check: Passed (ignoring filename warning)")
+        print(Fore.GREEN + "Pylint check: Passed (ignoring filename warning)" + Style.RESET_ALL)
     else:
-        print("Pylint check: Failed. Run: $ pylint 1-filter_states.py")
+        print(Fore.RED + "Pylint check: Failed. Run: $ pylint 1-filter_states.py" + Style.RESET_ALL)
 
     mypy_returncode = run_mypy()
     if mypy_returncode == 0:
-        print("Mypy check: Passed")
+        print(Fore.GREEN + "Mypy check: Passed" + Style.RESET_ALL)
     else:
-        print("Mypy check: Failed. Run: $ mypy 1-filter_states.py")
+        print(Fore.RED + "Mypy check: Failed. Run: $ mypy 1-filter_states.py" + Style.RESET_ALL)
 
     flake8_returncode = run_flake8()
     if flake8_returncode == 0:
-        print("Flake8 check: Passed")
+        print(Fore.GREEN + "Flake8 check: Passed" + Style.RESET_ALL)
     else:
-        print("Flake8 check: Failed. Run: $ flake8 1-filter_states.py")
+        print(Fore.RED + "Flake8 check: Failed. Run: $ flake8 --config=.flake8 1-filter_states.py" + Style.RESET_ALL)
 
     black_returncode = run_black()
     if black_returncode == 0:
-        print("Black check: Passed")
+        print(Fore.GREEN + "Black check: Passed" + Style.RESET_ALL)
     else:
-        print("Black check: Failed. Run: $ black 1-filter_states.py")
+        print(Fore.RED + "Black check: Failed. Run: $ black 1-filter_states.py" + Style.RESET_ALL)
 
     isort_returncode = run_isort()
     if isort_returncode == 0:
-        print("isort check: Passed")
+        print(Fore.GREEN + "isort check: Passed" + Style.RESET_ALL)
     else:
-        print("isort check: Failed. Run: $ isort 1-filter_states.py")
+        print(Fore.RED + "isort check: Failed. Run: $ isort 1-filter_states.py" + Style.RESET_ALL)
 
     if (pylint_returncode in [0, 2] and mypy_returncode == 0 and flake8_returncode == 0 and
         black_returncode == 0 and isort_returncode == 0):
         unittest.main(argv=['first-arg-is-ignored'], exit=False)
     else:
-        print("Fix style and type check issues before running the checker.")
+        print(Fore.RED + "Fix style and type check issues before running the checker." + Style.RESET_ALL)

@@ -6,10 +6,7 @@ and then compares the output to the expected output using unittest.
 
 import subprocess
 import unittest
-from colorama import init, Fore, Style
-
-# Initialize colorama
-init()
+from colorama import Fore, Style
 
 def run_command(command):
     """Run a command and return its output and return code."""
@@ -20,52 +17,52 @@ def run_pylint():
     """Run pylint on the 4-cities_by_state.py file and print the output."""
     command = ["pylint", "4-cities_by_state.py"]
     stdout, stderr, returncode = run_command(command)
-    print(Fore.BLUE + "Pylint output:\n" + Style.RESET_ALL + stdout)
+    print(Fore.BLUE + "Pylint output:\n" + stdout + Style.RESET_ALL)
     if stderr:
-        print(Fore.RED + "Pylint errors:\n" + Style.RESET_ALL + stderr)
+        print(Fore.RED + "Pylint errors:\n" + stderr + Style.RESET_ALL)
     return returncode
 
 def run_mypy():
     """Run mypy on the 4-cities_by_state.py file and print the output."""
     command = ["mypy", "4-cities_by_state.py"]
     stdout, stderr, returncode = run_command(command)
-    print(Fore.BLUE + "Mypy output:\n" + Style.RESET_ALL + stdout)
+    print(Fore.BLUE + "Mypy output:\n" + stdout + Style.RESET_ALL)
     if stderr:
-        print(Fore.RED + "Mypy errors:\n" + Style.RESET_ALL + stderr)
+        print(Fore.RED + "Mypy errors:\n" + stderr + Style.RESET_ALL)
     return returncode
 
 def run_flake8():
     """Run flake8 on the 4-cities_by_state.py file and print the output."""
-    command = ["flake8", "--config=.flake8", "4-cities_by_state.py"]
+    command = ["flake8", "4-cities_by_state.py"]
     stdout, stderr, returncode = run_command(command)
-    print(Fore.BLUE + "Flake8 output:\n" + Style.RESET_ALL + stdout)
+    print(Fore.BLUE + "Flake8 output:\n" + stdout + Style.RESET_ALL)
     if stderr:
-        print(Fore.RED + "Flake8 errors:\n" + Style.RESET_ALL + stderr)
+        print(Fore.RED + "Flake8 errors:\n" + stderr + Style.RESET_ALL)
     return returncode
 
 def run_black():
     """Run black on the 4-cities_by_state.py file and print the output."""
     command = ["black", "--check", "4-cities_by_state.py"]
     stdout, stderr, returncode = run_command(command)
-    print(Fore.BLUE + "Black output:\n" + Style.RESET_ALL + stdout)
+    print(Fore.BLUE + "Black output:\n" + stdout + Style.RESET_ALL)
     if stderr:
-        print(Fore.RED + "Black errors:\n" + Style.RESET_ALL + stderr)
+        print(Fore.RED + "Black errors:\n" + stderr + Style.RESET_ALL)
     return returncode
 
 def run_isort():
     """Run isort on the 4-cities_by_state.py file and print the output."""
     command = ["isort", "--check-only", "4-cities_by_state.py"]
     stdout, stderr, returncode = run_command(command)
-    print(Fore.BLUE + "isort output:\n" + Style.RESET_ALL + stdout)
+    print(Fore.BLUE + "isort output:\n" + stdout + Style.RESET_ALL)
     if stderr:
-        print(Fore.RED + "isort errors:\n" + Style.RESET_ALL + stderr)
+        print(Fore.RED + "isort errors:\n" + stderr + Style.RESET_ALL)
     return returncode
 
 class TestOutput(unittest.TestCase):
     def test_output(self):
         """Run the student's script and compare the output to the expected output."""
         # Define the command and arguments to run the student's script
-        command = ["./4-cities_by_state.py", "root", "sgc91", "hbtn_0e_4_usa"]
+        command = ["./4-cities_by_state.py", "root", "your_password_here", "hbtn_0e_4_usa"]
 
         # Run the student's script and capture the output
         result = subprocess.run(command, capture_output=True, text=True)

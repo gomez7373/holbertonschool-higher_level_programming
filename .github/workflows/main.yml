@@ -25,7 +25,7 @@ jobs:
         password: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Set Docker Image Tag
-      run: echo "IMAGE_TAG=my-image-name-$(date +%s)" >> $GITHUB_ENV  # Changed colon to hyphen
+      run: echo "IMAGE_TAG=my-image-name-$(date +%s)" >> $GITHUB_ENV  # Ensure no colons
 
     - name: Build and push Docker image
       run: |

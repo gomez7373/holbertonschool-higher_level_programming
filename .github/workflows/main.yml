@@ -29,5 +29,4 @@ jobs:
 
     - name: Build and push Docker image
       run: |
-        docker buildx build --push --tag ghcr.io/${{ github.repository }}:$IMAGE_TAG --file devops_essentials/Dockerfile .
-
+        docker buildx build --push --tag ghcr.io/${{ github.repository }}:${{ env.IMAGE_TAG }} --file devops_essentials/Dockerfile .

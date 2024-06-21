@@ -6,7 +6,6 @@ It takes 3 arguments: mysql username, mysql password, and database name.
 """
 
 import sys
-
 import MySQLdb
 
 if __name__ == "__main__":
@@ -15,18 +14,14 @@ if __name__ == "__main__":
     MYSQL_PASSWORD = sys.argv[2]
     DATABASE_NAME = sys.argv[3]
 
-    try:
-        # Connect to the MySQL database
-        database = MySQLdb.connect(
-            host="localhost",
-            user=MYSQL_USERNAME,
-            passwd=MYSQL_PASSWORD,
-            db=DATABASE_NAME,
-            port=3306,
-        )
-    except MySQLdb.OperationalError as e:
-        print(f"Error connecting to the database: {e}")
-        sys.exit(1)
+    # Connect to the MySQL database
+    database = MySQLdb.connect(
+        host="localhost",
+        user=MYSQL_USERNAME,
+        passwd=MYSQL_PASSWORD,
+        db=DATABASE_NAME,
+        port=3306,
+    )
 
     with database.cursor() as cursor:
         cursor.execute(
@@ -35,8 +30,11 @@ if __name__ == "__main__":
             "ORDER BY cities.id ASC"
         )
         result = cursor.fetchall()
-        for row in result:
-            print(row)
+        if result:
+            # Print each result tuple on a new line
+            for row in result:
+                print(row)
 
     # Close the database connection
     database.close()
+

@@ -1,4 +1,3 @@
-#!/usr/bin/python3
 """
 This script lists all State objects that contain the letter 'a'
 from the database hbtn_0e_6_usa.
@@ -15,24 +14,26 @@ if __name__ == "__main__":
     MYSQL_USERNAME = sys.argv[1]
     MYSQL_PASSWORD = sys.argv[2]
     DATABASE_NAME = sys.argv[3]
+    STATE_NAME = sys.argv[4]
 
-    # Connect to the MySQL database
-    engine = create_engine(
-        f'mysql+mysqldb://{MYSQL_USERNAME}:{MYSQL_PASSWORD}@localhost/'
-        f'{DATABASE_NAME}',
-        pool_pre_ping=True
-    )
+    # Create the engine and bind it to the metadata of the Base class
+    engine = create_engine(f'mysql+mysqldb://{MYSQL_USERNAME}:{MYSQL_PASSWORD}@localhost/'
+   f' {DATABASE_NAME}', pool_pre_ping=True)
     Base.metadata.create_all(engine)
 
-    # Create a session
+    # Create a configured "Session" class
     Session = sessionmaker(bind=engine)
+    # Create a Session
     session = Session()
 
-    # Query states that contain the letter 'a'
-    states_with_a = session.query(State).filter(State.name.like('%a%'))\
-        .order_by(State.id).all()
-    for state in states_with_a:
-        print(f"{state.id}: {state.name}")
+    # Query the database for the state
+    state = session.query(State).filter(State.name == STATE_NAME).first()
+
+    # Print the result
+    if state:
+        print(f"{state.id}")
+    else:
+        print("Not found")
 
     # Close the session
     session.close()

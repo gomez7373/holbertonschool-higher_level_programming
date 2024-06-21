@@ -7,8 +7,8 @@ from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship
 from model_state import Base
 
-
 class City(Base):
+
     """
     City class that represents the cities table.
     """
@@ -22,7 +22,7 @@ class City(Base):
     state = relationship("State", back_populates="cities")
 
 # For previous tasks,
-#comment out the above relationship line and use the following:
+# comment out the above relationship line and use the following:
 """
 from sqlalchemy import Column, Integer, String, ForeignKey
 from model_state import Base

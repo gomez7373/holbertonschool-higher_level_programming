@@ -1,8 +1,7 @@
 #!/usr/bin/python3
 """
-This script lists all State objects that contain the letter 'a'
+This script prints the State object with the name passed as an argument
 from the database hbtn_0e_6_usa.
-It takes 3 arguments: mysql username, mysql password, and database name.
 """
 
 import sys
@@ -18,8 +17,11 @@ if __name__ == "__main__":
     STATE_NAME = sys.argv[4]
 
     # Create the engine and bind it to the metadata of the Base class
-    engine = create_engine(f'mysql+mysqldb://{MYSQL_USERNAME}:{MYSQL_PASSWORD}@localhost/'
-   f' {DATABASE_NAME}', pool_pre_ping=True)
+    engine = create_engine(
+        f'mysql+mysqldb://{MYSQL_USERNAME}:{MYSQL_PASSWORD}@localhost/'
+        f'{DATABASE_NAME}',
+        pool_pre_ping=True
+    )
     Base.metadata.create_all(engine)
 
     # Create a configured "Session" class

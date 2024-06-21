@@ -34,8 +34,10 @@ if __name__ == "__main__":
             "ORDER BY cities.id ASC"
         )
         result = cursor.fetchall()
-        for row in result:
-            print(row)
+        if result:
+            # Print each result tuple on a new line
+            for row in result:
+                print(row)
 
     # Close the database connection
     database.close()

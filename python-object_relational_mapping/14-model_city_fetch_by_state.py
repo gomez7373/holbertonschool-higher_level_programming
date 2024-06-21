@@ -10,7 +10,7 @@ from model_state import Base, State
 from model_city import City
 
 if __name__ == "__main__":
-    # Capture the command-line arguments
+    # Capture the command-line arguments.
     MYSQL_USERNAME = sys.argv[1]
     MYSQL_PASSWORD = sys.argv[2]
     DATABASE_NAME = sys.argv[3]

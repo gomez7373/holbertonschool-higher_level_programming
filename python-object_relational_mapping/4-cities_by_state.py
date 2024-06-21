@@ -1,21 +1,19 @@
 #!/usr/bin/python3
 """
-This script lists all cities from the database hbtn_0e_4_usa.
-It takes 3 arguments: mysql username, mysql password, and database name.
+Lists all cities from the database hbtn_0e_4_usa.
+Arguments: MySQL username, MySQL password, and database name.
 """
 
 import sys
-import MySQLdb
 from getpass import getpass
+import MySQLdb
 
 if __name__ == "__main__":
-    # Capture the command-line arguments
     MYSQL_USERNAME = sys.argv[1]
     MYSQL_PASSWORD = getpass(prompt="Enter MySQL password: ")
     DATABASE_NAME = sys.argv[3]
 
     try:
-        # Connect to the MySQL database
         database = MySQLdb.connect(
             host="localhost",
             user=MYSQL_USERNAME,
@@ -24,7 +22,6 @@ if __name__ == "__main__":
             port=3306
         )
 
-        # Create a cursor to interact with the database
         with database.cursor() as cursor:
             cursor.execute(
                 "SELECT cities.id, cities.name, states.name FROM cities "
@@ -33,11 +30,8 @@ if __name__ == "__main__":
             )
             result = cursor.fetchall()
             if result:
-                # Print each result tuple on a new line
-                for row in result:
-                    print(row)
+                print(*result, sep="\n")
 
-        # Close the database connection
         database.close()
 
     except MySQLdb.OperationalError as e:

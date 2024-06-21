@@ -17,7 +17,11 @@ if __name__ == "__main__":
     DATABASE_NAME = sys.argv[3]
 
     # Connect to the MySQL database
-    engine = create_engine(f'mysql+mysqldb://{MYSQL_USERNAME}:{MYSQL_PASSWORD}@localhost/{DATABASE_NAME}', pool_pre_ping=True)
+    engine = create_engine(
+        f'mysql+mysqldb://{MYSQL_USERNAME}:{MYSQL_PASSWORD}@localhost/'
+        f'{DATABASE_NAME}',
+        pool_pre_ping=True
+    )
     Base.metadata.create_all(engine)
 
     # Create a session
@@ -25,10 +29,10 @@ if __name__ == "__main__":
     session = Session()
 
     # Query states that contain the letter 'a'
-    states_with_a = session.query(State).filter(State.name.like('%a%')).order_by(State.id).all()
+    states_with_a = session.query(State).filter(State.name.like('%a%'))\
+        .order_by(State.id).all()
     for state in states_with_a:
         print(f"{state.id}: {state.name}")
 
     # Close the session
     session.close()
-

@@ -6,6 +6,7 @@ It takes 3 arguments: mysql username, mysql password, and database name.
 """
 
 import sys
+
 import MySQLdb
 
 if __name__ == "__main__":

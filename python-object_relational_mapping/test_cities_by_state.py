@@ -1,5 +1,3 @@
-# Save this as test_cities_by_state.py
-
 import unittest
 import subprocess
 import os

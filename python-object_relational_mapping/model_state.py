@@ -23,21 +23,18 @@ class State(Base):
 
 # For previous tasks, comment out the above relationship line and use the following:
 """
-# from sqlalchemy import Column, Integer, String
-# from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import Column, Integer, String
+from sqlalchemy.ext.declarative import declarative_base
 
-# Base = declarative_base()
+Base = declarative_base()
 
-# class State(Base):
-#     """
-#     State class that represents the states table.
-#     """
-#     __tablename__ = 'states'
+class State(Base):
+    # State class that represents the states table.
+    __tablename__ = 'states'
 
-#     id = Column(Integer, primary_key=True, nullable=False, autoincrement=True)
-#     name = Column(String(128), nullable=False)
+    id = Column(Integer, primary_key=True, nullable=False, autoincrement=True)
+    name = Column(String(128), nullable=False)
 
-#     # This line should be commented for Task 14.
-#     cities = relationship("City")
+    # This line should be commented for Task 14.
+    cities = relationship("City")
 """
-

@@ -15,7 +15,11 @@ if __name__ == "__main__":
     DATABASE_NAME = sys.argv[3]
 
     # Create the engine and bind it to the metadata of the Base class
-    engine = create_engine(f'mysql+mysqldb://{MYSQL_USERNAME}:{MYSQL_PASSWORD}@localhost/{DATABASE_NAME}', pool_pre_ping=True)
+    engine = create_engine(
+        f'mysql+mysqldb://{MYSQL_USERNAME}:{MYSQL_PASSWORD}@localhost/'
+        f'{DATABASE_NAME}',
+        pool_pre_ping=True
+    )
     Base.metadata.create_all(engine)
 
     # Create a configured "Session" class

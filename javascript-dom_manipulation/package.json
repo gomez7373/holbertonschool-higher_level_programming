@@ -4,7 +4,8 @@
   "description": "Curriculum [C#23] Foundations v2 - Part 2 Average: 98.96% You have a captain's log due before 2024-07-28 (in 2 days)! Log it now! Project badge JavaScript DOM manipulation  Novice  By: Javier Valenzani  Weight: 1  Migrated to checker v2:   Manual QA review must be done (request it when you are done with the project) JavaScript DOM Manipulation Resources Read or watch: What is JavaScript? Introduction to the DOM Document Interface Element Class Locating DOM elements using selectors CSS Selectors CSS Diner Play with Selectors Client-side Web APIs Introduction to web APIs Manipulating documents Fetching data from the server What went wrong? Troubleshooting JavaScript Learning Objectives At the end of this project, you are expected to be able to explain to anyone, without the help of Google:",
   "main": "0-script.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "http-server ."
   },
   "keywords": [],
   "author": "",
@@ -16,6 +17,7 @@
     "globals": "^15.8.0"
   },
   "dependencies": {
+    "http-server": "^14.1.1", // Ensure you add this line
     "acorn": "^8.12.1",
     "acorn-jsx": "^5.3.2",
     "ajv": "^6.12.6",
@@ -73,7 +75,6 @@
     "flatted": "^3.3.1",
     "for-each": "^0.3.3",
     "function-bind": "^1.1.2",
-    "function.prototype.name": "^1.1.6",
     "functions-have-names": "^1.2.3",
     "get-intrinsic": "^1.2.4",
     "get-symbol-description": "^1.0.2",
@@ -193,3 +194,4 @@
     "yocto-queue": "^0.1.0"
   }
 }
+
